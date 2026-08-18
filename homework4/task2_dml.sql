@@ -1,9 +1,7 @@
 -- Task 2: DDL
 
 -- 1. Create Departments table (drop first so the script can be re-run)
-DROP TABLE Departments;
-
-CREATE TABLE Departments (
+CREATE TABLE IF NOT EXISTS Departments (
     DepartmentID SERIAL PRIMARY KEY,
     DepartmentName VARCHAR(50) UNIQUE NOT NULL,
     Location VARCHAR(50)
@@ -22,9 +20,6 @@ WHERE
     Email IS NULL;
 
 -- 4. Add UNIQUE constraint to Email column (recreate safely)
-ALTER TABLE Employees
-DROP CONSTRAINT IF EXISTS UQ_Employees_Email;
-
 ALTER TABLE Employees
 ADD CONSTRAINT UQ_Employees_Email UNIQUE (Email);
 
