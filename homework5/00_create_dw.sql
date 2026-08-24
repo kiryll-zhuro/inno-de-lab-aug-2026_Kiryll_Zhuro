@@ -39,7 +39,8 @@ CREATE TABLE dim_subject (
     subject_sk SERIAL PRIMARY KEY,
     source_subject_id INT,
     subject_name VARCHAR(100),
-    subject_area VARCHAR(50)
+    subject_area VARCHAR(50),
+    ects_credits INT
 );
 
 -- one exam attempt (center of the star)
@@ -49,8 +50,8 @@ CREATE TABLE fact_grades (
     student_sk INT REFERENCES dim_student(student_sk),
     teacher_sk INT REFERENCES dim_teacher(teacher_sk),
     subject_sk INT REFERENCES dim_subject(subject_sk),
-    score INT,
-    ects_credits INT
+    attempt_number INT,
+    score INT
 );
 
 CREATE INDEX idx_fact_grades_keys
@@ -83,27 +84,17 @@ INSERT INTO dim_teacher
 ('Mikhail Kuznetsov', 'None', 'Lecturer');
 
 INSERT INTO dim_subject
-(source_subject_id, subject_name, subject_area) VALUES
-(1, 'Database Systems', 'CS'),
-(2, 'Mathematical Analysis', 'Math'),
-(3, 'Python Programming', 'CS'),
-(4, 'Operating Systems', 'CS');
+(source_subject_id, subject_name, subject_area, ects_credits) VALUES
+(1, 'Database Systems', 'CS', 5),
+(2, 'Mathematical Analysis', 'Math', 6),
+(3, 'Python Programming', 'CS', 3),
+(4, 'Operating Systems', 'CS', 6);
 
 INSERT INTO fact_grades
-(date_sk, student_sk, teacher_sk, subject_sk, score, ects_credits) VALUES
-(1, 1, 1, 1, 9, 5),
-(1, 2, 1, 1, 7, 5),
-(1, 5, 1, 1, 5, 5),
-(2, 1, 3, 3, 10, 3),
-(2, 3, 3, 3, 9, 3),
-(2, 4, 3, 3, 4, 3),
-(3, 4, 3, 3, 7, 3),
-(4, 1, 2, 2, 8, 6),
-(4, 2, 2, 2, 9, 6),
-(5, 3, 2, 2, 7, 6),
-(5, 5, 2, 2, 5, 6),
-(6, 5, 2, 2, 6, 6),
-(7, 3, 1, 4, 8, 5),
-(7, 4, 1, 4, 9, 5),
-(7, 2, 1, 4, 7, 5),
-(8, 5, 3, 3, 8, 3);
+(date_sk, student_sk, teacher_sk, subject_sk, attempt_number, score) VALUES
+(1, 1, 1, 1, 1, 9),
+(4, 2, 2, 2, 1, 9),
+(5, 5, 2, 2, 1, 5),
+(2, 4, 3, 3, 1, 4),
+(3, 4, 3, 3, 2, 7),
+(7, 3, 1, 4, 1, 8);

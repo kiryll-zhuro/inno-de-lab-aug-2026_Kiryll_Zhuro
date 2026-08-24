@@ -47,26 +47,15 @@ ORDER BY
 LIMIT 3;
 
 -- Q4. Which subjects require the most retakes?
-WITH attempts AS (
-    SELECT
-        subject_sk,
-        student_sk,
-        ROW_NUMBER() OVER (
-            PARTITION BY student_sk, subject_sk
-            ORDER BY date_sk
-        ) AS attempt_number
-    FROM
-        fact_grades
-)
 SELECT
     dim_subject.subject_name,
     COUNT(*) AS retakes
 FROM
-    attempts
+    fact_grades
 JOIN dim_subject
-    ON dim_subject.subject_sk = attempts.subject_sk
+    ON dim_subject.subject_sk = fact_grades.subject_sk
 WHERE
-    attempts.attempt_number > 1
+    fact_grades.attempt_number > 1
 GROUP BY
     dim_subject.subject_name
 ORDER BY
