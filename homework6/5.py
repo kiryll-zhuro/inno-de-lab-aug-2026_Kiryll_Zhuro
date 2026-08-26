@@ -1,12 +1,16 @@
 import random
 
-secret = random.randint(1, 20)
-attempts = 5
+MIN_NUMBER = 1
+MAX_NUMBER = 20
+MAX_ATTEMPTS = 5
 
-print(f"Я загадал число от 1 до 20. У тебя {attempts} попыток!")
+secret = random.randint(MIN_NUMBER, MAX_NUMBER)
+attempts = MAX_ATTEMPTS
+
+print(f"Я загадал число от {MIN_NUMBER} до {MAX_NUMBER}. У тебя {attempts} попыток!")
 
 while attempts > 0:
-    guess = int(input(f"Попытка {6 - attempts}. Введите число: "))
+    guess = int(input(f"Попытка {MAX_ATTEMPTS - attempts + 1}. Введите число: "))
     attempts -= 1
 
     if guess == secret:
