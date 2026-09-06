@@ -1,12 +1,13 @@
 class Trainee:
     """Класс для отслеживания прогресса и успеваемости стажёра."""
 
+    __score: int
+
     def __init__(self, name: str, surname: str,
                  score: int = 0, passing_grade: int = 10) -> None:
         self.name: str = name
         self.surname: str = surname
         self.passing_grade: int = passing_grade
-        self.__score: int = 0
         self.score = score
 
     @property
@@ -47,22 +48,22 @@ class Trainee:
         """Возвращает True, если стажёр набрал проходной балл."""
         return self.score >= self.passing_grade
 
+if __name__ == "__main__":
+    print("=== ПРОВЕРКА УСПЕВАЕМОСТИ СТАЖЁРА ===")
 
-print("=== ПРОВЕРКА УСПЕВАЕМОСТИ СТАЖЁРА ===")
+    # 1. Создал стажера с начальным баллом 9 и проходным баллом 10
+    trainee = Trainee(name="Иван", surname="Иванов", score=9, passing_grade=10)
 
-# 1. Создал стажера с начальным баллом 9 и проходным баллом 10
-trainee = Trainee(name="Иван", surname="Иванов", score=9, passing_grade=10)
+    # 2. Выполнил домашнее задание и проверил статус
+    trainee.do_homework()
+    print(f"Баллы: {trainee.score}, Прошел курс: {trainee.is_passing()}")
 
-# 2. Выполнил домашнее задание и проверил статус
-trainee.do_homework()
-print(f"Баллы: {trainee.score}, Прошел курс: {trainee.is_passing()}")
+    # 3. Пропустил лекцию и проверил статус
+    trainee.miss_lecture()
+    print(f"Баллы: {trainee.score}, Прошел курс: {trainee.is_passing()}")
 
-# 3. Пропустил лекцию и проверил статус
-trainee.miss_lecture()
-print(f"Баллы: {trainee.score}, Прошел курс: {trainee.is_passing()}")
-
-# 4. Проверил валидацию (попытка задать неверный тип или отрицательное значение) 
-try:
-    trainee.score = -5
-except ValueError as e:
-    print(f"Ошибка: {e}")
+    # 4. Проверил валидацию (попытка задать неверный тип или отрицательное значение) 
+    try:
+        trainee.score = -5
+    except ValueError as e:
+        print(f"Ошибка: {e}")
